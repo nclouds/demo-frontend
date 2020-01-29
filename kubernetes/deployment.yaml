@@ -21,7 +21,7 @@ spec:
         app: ecsdemo-frontend
     spec:
       containers:
-      - image: brentley/ecsdemo-frontend:latest
+      - image: 695292474035.dkr.ecr.us-east-1.amazonaws.com/nclouds-eks-frontend:latest
         imagePullPolicy: Always
         name: ecsdemo-frontend
         ports:
