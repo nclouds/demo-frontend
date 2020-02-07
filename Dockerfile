@@ -3,6 +3,7 @@ FROM ruby:2.5-slim
 COPY Gemfile Gemfile.lock /usr/src/app/
 WORKDIR /usr/src/app
 
+# hadolint ignore=DL3008,DL3009,DL3015
 RUN apt-get update && apt-get -y install iproute2 curl jq libgmp3-dev ruby-dev build-essential sqlite libsqlite3-dev && \
     bundle install && \
     apt-get autoremove -y --purge && \
