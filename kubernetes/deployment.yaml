@@ -4,7 +4,6 @@ metadata:
   name: ecsdemo-frontend
   labels:
     app: ecsdemo-frontend
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -29,6 +28,16 @@ spec:
           protocol: TCP
         env:
         - name: CRYSTAL_URL
-          value: "http://ecsdemo-crystal.default.svc.cluster.local/crystal"
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: frontend-configmap
+              # Specify the key associated with the value
+              key: crustal.url
         - name: NODEJS_URL
-          value: "http://ecsdemo-nodejs.default.svc.cluster.local/"
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: frontend-configmap
+              # Specify the key associated with the value
+              key: nodejs.URL
