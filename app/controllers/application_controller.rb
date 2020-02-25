@@ -7,60 +7,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # Example endpoint that calls the backend nodejs api
-  def index
-    begin
-      req = Net::HTTP::Get.new(nodejs_uri.to_s)
-      res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port) {|http|
-        http.read_timeout = 2
-        http.open_timeout = 2
-        http.request(req)
-      }
-
-      if res.code == '200'
-        @text = res.body
-      else
-        @text = "no backend found"
-      end
-
-    rescue => e
-      logger.error e.message
-      logger.error e.backtrace.join("\n")
-      @text = "no backend found"
-    end
-
-    begin
-      crystalreq = Net::HTTP::Get.new(crystal_uri.to_s)
-      crystalres = Net::HTTP.start(crystal_uri.host, crystal_uri.port) {|http|
-        http.read_timeout = 2
-        http.open_timeout = 2
-        http.request(crystalreq)
-      }
-
-      if crystalres.code == '200'
-        @crystal = crystalres.body
-      else
-        @crystal = "no backend found"
-      end
-
-    rescue => e
-      logger.error e.message
-      logger.error e.backtrace.join("\n")
-      @crystal = "no backend found"
-    end
-  end
-
   # This endpoint is used for health checks. It should return a 200 OK when the app is up and ready to serve requests.
   def health
     render plain: "OK"
-  end
-
-  def crystal_uri
-    expand_url ENV["CRYSTAL_URL"]
-  end
-
-  def nodejs_uri
-    expand_url ENV["NODEJS_URL"]
   end
 
   # Resolve the SRV records for the hostname in the URL

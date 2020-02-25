@@ -20,24 +20,9 @@ spec:
         app: ecsdemo-frontend
     spec:
       containers:
-      - image: 695292474035.dkr.ecr.us-east-1.amazonaws.com/nclouds-eks-frontend:latest
+      - image: shariqrizvi/simple-frontend:v3
         imagePullPolicy: Always
         name: ecsdemo-frontend
         ports:
         - containerPort: 3000
           protocol: TCP
-        env:
-        - name: CRYSTAL_URL
-          valueFrom:
-            configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
-              name: frontend-configmap
-              # Specify the key associated with the value
-              key: crustal.url
-        - name: NODEJS_URL
-          valueFrom:
-            configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
-              name: frontend-configmap
-              # Specify the key associated with the value
-              key: nodejs.URL
